@@ -2,7 +2,7 @@
   "name": "baks-dev/users-user",
   "description": "Модуль сущности User",
   "homepage": "https://github.com/baks-dev/users-user",
-  "keywords": ["bundle", "symfony", "library", "module", "plugin", "user"],
+  "keywords": ["symfony", "bundle", "library", "module", "plugin", "user", "baksdev"],
   "license": "MIT",
   "type": "library",
   "authors": [
