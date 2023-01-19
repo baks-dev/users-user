@@ -9,9 +9,10 @@ return static function (ContainerConfigurator $configurator)
       ->autowire()
       ->autoconfigure()
     ;
-    
-    $services->load('BaksDev\Users\User\Repository\\', __DIR__.'/../../Repository');
 	
-   
+	$namespace = 'BaksDev\Users\User';
+    
+    $services->load($namespace.'\Repository\\', __DIR__.'/../../Repository');
+	
 };
 
