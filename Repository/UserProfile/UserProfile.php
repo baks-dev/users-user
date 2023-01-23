@@ -21,43 +21,52 @@
  *  THE SOFTWARE.
  */
 
-namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+declare(strict_types=1);
 
+namespace BaksDev\Users\User\Repository\UserProfile;
 
-use BaksDev\Users\Profile\UserProfile\Entity\Info\UserProfileInfo;
-use BaksDev\Users\User\Entity\UserProfile\UserProfile;
-use BaksDev\Users\User\Entity\UserProfile\UserProfileInterface;
-use BaksDev\Users\User\Type\Id\UserUid;
-use BaksDev\Users\User\Type\Id\UserUidType;
-use Symfony\Config\DoctrineConfig;
-
-
-return static function (DoctrineConfig $doctrine, ContainerConfigurator $configurator)
+final class UserProfile implements UserProfileInterface
 {
-	$services = $configurator->services()
-		->defaults()
-		->autowire()
-		->autoconfigure()
-	;
 	
-	$doctrine->dbal()->type(UserUid::TYPE)->class(UserUidType::class);
-	$orm = $doctrine->orm();
+	/**  Username пользователя */
+	public function getUsername() : ?string
+	{
+		return null;
+	}
 	
-	/** Интерфейс профиля пользователя */
-	$services->set(UserProfileInterface::class);
-	$orm->resolveTargetEntity(UserProfileInterface::class, UserProfile::class);
+	/** Контакт */
+	public function getContact() : ?string
+	{
+		return null;
+	}
 	
-	//$orm->resolveTargetEntity(UserProfileInterface::class, UserProfileInfo::class);
+	/** Тип пользователя */
+	public function getType() : ?string
+	{
+		return null;
+	}
 	
+	/** Адрес персональной страницы */
+	public function getPage() : ?string
+	{
+		return null;
+	}
 	
+	/** Адрес страницы редактирвоания */
+	public function getEdiPath() : ?string
+	{
+		return null;
+	}
 	
-	$emDefault = $orm->entityManager('default');
-	$emDefault->autoMapping(true);
+	/** Идентификатор страницы редактирвоания */
+	public function getEvent() : ?string
+	{
+		return null;
+	}
 	
-	$emDefault->mapping('User')
-		->type('attribute')
-		->dir(__DIR__.'/../../Entity')
-		->isBundle(false)
-		->prefix('BaksDev\Users\User\Entity')
-		->alias('User');
-};
+	/** Аватарка */
+	public function getImage() : ?string
+	{
+		return null;
+	}
+}

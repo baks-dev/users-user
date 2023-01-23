@@ -14,17 +14,16 @@
  *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL THE
  *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
- *
- *
  */
 
 namespace BaksDev\Users\User\Entity;
 
+use BaksDev\Users\User\Repository\UserProfile\UserProfileInterface;
 use BaksDev\Users\User\Repository\UserRepository;
 use BaksDev\Users\User\Type\Id\UserUid;
 use Doctrine\ORM\Mapping as ORM;
@@ -32,7 +31,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'users')]
-class User implements UserInterface
+class User
+	implements UserInterface
 {
     public const TABLE = 'users';
     
@@ -43,12 +43,29 @@ class User implements UserInterface
     
     /** Роли пользователя */
     private array $role = [];
-    
-    /** Профиль пользователя */
-    private ?array $profile = null;
-    
-    public function __construct(string $id = null) { $this->id = new UserUid($id); }
 	
+	/** Профиль пользователя */
+	//#[ORM\OneToMany(mappedBy: 'user', targetEntity: UserProfileInterface::class)]
+	//#[ORM\OneToOne(mappedBy: 'user', targetEntity: UserProfileInterface::class)]
+	//private ?UserProfileInterface $profile = null;
+    
+    
+    //private ?array $profile = null;
+    //private UserProfileInterface $profile;
+	
+//    public function __construct(string $id = null) {
+//
+//		$this->id = new UserUid($id);
+//	}
+	
+	//private UserProfileInterface $profile;
+	
+	
+	
+	public function __construct(string $id = null)
+	{
+		$this->id = new UserUid($id);
+	}
 	
 	/** Идентификатор */
 	
@@ -79,24 +96,29 @@ class User implements UserInterface
 	
 	
 	/** Профиль пользователя */
-    
-
-    public function getProfile() : ?array
+    public function getProfile() //: ?UserProfileInterface
     {
-        return $this->profile;
+		return null;
+		
+		//dump($this->profile->getProfile());
+		
+		//return $this->profile;
+		
+       //return $this->profile;
     }
-    
-
-    public function getProfileUid() : string
-    {
-        $profile = $this->profile;
-        return new $profile['user_profile_id'];
-    }
-
-    public function setProfile(?array $profile = null) : void
-    {
-        $this->profile = $profile;
-    }
+	
+//
+//
+//    public function getProfileUid() : string
+//    {
+//        $profile = $this->profile;
+//        return new $profile['user_profile_id'];
+//    }
+//
+//    public function setProfile(?array $profile = null) : void
+//    {
+//        $this->profile = $profile;
+//    }
     
 
     /**
