@@ -20,5 +20,5 @@ namespace BaksDev\Users\User\Tests\Type;
 
 final class UserUidTypeTest
 {
-    
+	
 }

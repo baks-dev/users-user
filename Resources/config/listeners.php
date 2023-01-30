@@ -21,30 +21,28 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 use BaksDev\Users\User\Entity\User;
 use BaksDev\Users\User\EntityListeners;
 
-return static function (ContainerConfigurator $configurator)
-{
-    $services = $configurator->services()
-      ->defaults()
-      ->autowire()
-      ->autoconfigure();
-	
-	
+return static function(ContainerConfigurator $configurator) {
+	$services = $configurator->services()
+		->defaults()
+		->autowire()
+		->autoconfigure()
+	;
 	
 	$services->set(EntityListeners\UserListenerDecorate::class)
 		->decorate(\BaksDev\Users\User\Repository\UserProfile\UserProfileInterface::class, null, 9999)
 		->args([service('.inner')])
 		->tag(
 			'doctrine.orm.entity_listener',
-			['event' => 'postLoad', 'lazy' => true, 'entity' => User::class])
+			['event' => 'postLoad', 'lazy' => true, 'entity' => User::class]
+		)
 	;
 	
 	$services->set('EntityListeners\UserListener')
 		->class(EntityListeners\UserListener::class)
 		->tag(
 			'doctrine.orm.entity_listener',
-			['event' => 'postLoad', 'lazy' => true, 'entity' => User::class]);
-	
-	
-
+			['event' => 'postLoad', 'lazy' => true, 'entity' => User::class]
+		)
+	;
 	
 };

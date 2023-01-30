@@ -23,59 +23,69 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 final class UserUidTest extends KernelTestCase
 {
-    private const TEST_UUID = '0185494d-2ac6-7bbc-9bea-48af2709ac4d';
-    
-    public function newUid(mixed $uid = null, string $name = null) : UserUid
-    {
-        return new UserUid($uid, $name);
-    }
-    
-    public function testStringUid() : void
-    {
-        $UUID = $this->newUid(self::TEST_UUID);
-        self::assertEquals(self::TEST_UUID, $UUID->getValue());
-        
-    }
-    
-    public function testBadStringUid() : void
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->newUid('string');
-    }
-    
-    public function testObjectUid() : void
-    {
-
-        $UUID = $this->newUid(new UserUid(self::TEST_UUID));
-        self::assertEquals(self::TEST_UUID, $UUID->getValue());
-    }
-    
-    public function testNullUid() : void
-    {
-        $UUID = $this->newUid();
-        self::assertNotEquals(self::TEST_UUID, $UUID->getValue());
-    }
-    
-    public function testName() : void
-    {
-        $UUID = $this->newUid(name: self::TEST_UUID);
-        self::assertEquals(self::TEST_UUID, $UUID->getName());
-    }
-    
-    public function testTrueEquals() : void
-    {
-        $UUID = $this->newUid(name: self::TEST_UUID);
-        $equals = $UUID->equals($this->newUid(self::TEST_UUID));
-    
-        self::assertIsBool($equals);
-        $this->isTrue();
-    }
-    
-    public function testFalseEquals() {
-        $UUID = $this->newUid(name: self::TEST_UUID);
-        $equals = $UUID->equals($this->newUid());
-        
-        self::assertIsBool($equals);
-        $this->isFalse();
-    }
+	private const TEST_UUID = '0185494d-2ac6-7bbc-9bea-48af2709ac4d';
+	
+	
+	public function newUid(mixed $uid = null, string $name = null) : UserUid
+	{
+		return new UserUid($uid, $name);
+	}
+	
+	
+	public function testStringUid() : void
+	{
+		$UUID = $this->newUid(self::TEST_UUID);
+		self::assertEquals(self::TEST_UUID, $UUID->getValue());
+		
+	}
+	
+	
+	public function testBadStringUid() : void
+	{
+		$this->expectException(\InvalidArgumentException::class);
+		$this->newUid('string');
+	}
+	
+	
+	public function testObjectUid() : void
+	{
+		
+		$UUID = $this->newUid(new UserUid(self::TEST_UUID));
+		self::assertEquals(self::TEST_UUID, $UUID->getValue());
+	}
+	
+	
+	public function testNullUid() : void
+	{
+		$UUID = $this->newUid();
+		self::assertNotEquals(self::TEST_UUID, $UUID->getValue());
+	}
+	
+	
+	public function testName() : void
+	{
+		$UUID = $this->newUid(name: self::TEST_UUID);
+		self::assertEquals(self::TEST_UUID, $UUID->getName());
+	}
+	
+	
+	public function testTrueEquals() : void
+	{
+		$UUID = $this->newUid(name: self::TEST_UUID);
+		$equals = $UUID->equals($this->newUid(self::TEST_UUID));
+		
+		self::assertIsBool($equals);
+		$this->isTrue();
+	}
+	
+	
+	public function testFalseEquals()
+	{
+		$UUID = $this->newUid(name: self::TEST_UUID);
+		$equals = $UUID->equals($this->newUid());
+		
+		self::assertIsBool($equals);
+		$this->isFalse();
+	}
+	
 }

@@ -31,17 +31,21 @@ final class UserListener
 {
 	private UserProfileInterface $profile;
 	
-	public function __construct(UserProfileInterface $profile){
-
+	
+	public function __construct(UserProfileInterface $profile)
+	{
+		
 		$this->profile = $profile;
 	}
 	
+	
 	public function postLoad(UserInterface $data, LifecycleEventArgs $event) : void
-    {
-		$setProfile = \Closure::bind(function(object $object, UserProfileInterface $value){
+	{
+		$setProfile = \Closure::bind(function(object $object, UserProfileInterface $value) {
 			return $object->profile = $value;
 		}, null, $data);
-	
+		
 		$setProfile($data, $this->profile);
-    }
+	}
+	
 }

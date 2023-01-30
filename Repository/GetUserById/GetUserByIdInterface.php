@@ -22,5 +22,6 @@ use BaksDev\Users\User\Type\Id\UserUid;
 
 interface GetUserByIdInterface
 {
-    public function get(UserUid $userUid) : mixed;
+	public function get(UserUid $userUid) : mixed;
+	
 }

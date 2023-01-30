@@ -23,7 +23,6 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-
 use BaksDev\Users\Profile\UserProfile\Entity\Info\UserProfileInfo;
 use BaksDev\Users\User\Entity\UserProfile\UserProfile;
 use BaksDev\Users\User\Entity\UserProfile\UserProfileInterface;
@@ -31,9 +30,7 @@ use BaksDev\Users\User\Type\Id\UserUid;
 use BaksDev\Users\User\Type\Id\UserUidType;
 use Symfony\Config\DoctrineConfig;
 
-
-return static function (DoctrineConfig $doctrine, ContainerConfigurator $configurator)
-{
+return static function(DoctrineConfig $doctrine, ContainerConfigurator $configurator) {
 	$services = $configurator->services()
 		->defaults()
 		->autowire()
@@ -49,8 +46,6 @@ return static function (DoctrineConfig $doctrine, ContainerConfigurator $configu
 	
 	//$orm->resolveTargetEntity(UserProfileInterface::class, UserProfileInfo::class);
 	
-	
-	
 	$emDefault = $orm->entityManager('default');
 	$emDefault->autoMapping(true);
 	
@@ -59,5 +54,6 @@ return static function (DoctrineConfig $doctrine, ContainerConfigurator $configu
 		->dir(__DIR__.'/../../Entity')
 		->isBundle(false)
 		->prefix('BaksDev\Users\User\Entity')
-		->alias('User');
+		->alias('User')
+	;
 };

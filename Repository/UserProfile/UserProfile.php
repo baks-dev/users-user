@@ -34,11 +34,13 @@ final class UserProfile implements UserProfileInterface
 		return null;
 	}
 	
+	
 	/** Контакт */
 	public function getContact() : ?string
 	{
 		return null;
 	}
+	
 	
 	/** Тип пользователя */
 	public function getType() : ?string
@@ -46,11 +48,13 @@ final class UserProfile implements UserProfileInterface
 		return null;
 	}
 	
+	
 	/** Адрес персональной страницы */
 	public function getPage() : ?string
 	{
 		return null;
 	}
+	
 	
 	/** Адрес страницы редактирвоания */
 	public function getEdiPath() : ?string
@@ -58,15 +62,18 @@ final class UserProfile implements UserProfileInterface
 		return null;
 	}
 	
+	
 	/** Идентификатор страницы редактирвоания */
 	public function getEvent() : ?string
 	{
 		return null;
 	}
 	
+	
 	/** Аватарка */
 	public function getImage() : ?string
 	{
 		return null;
 	}
+	
 }

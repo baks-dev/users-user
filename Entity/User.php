@@ -34,105 +34,103 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User
 	implements UserInterface
 {
-    public const TABLE = 'users';
-    
-    /** Идентификатор */
-    #[ORM\Id]
-    #[ORM\Column(name: 'user_id', type: UserUid::TYPE)]
-    private UserUid $id;
-    
-    /** Роли пользователя */
-    private array $role = [];
+	public const TABLE = 'users';
+	
+	/** Идентификатор */
+	#[ORM\Id]
+	#[ORM\Column(name: 'user_id', type: UserUid::TYPE)]
+	private UserUid $id;
+	
+	/** Роли пользователя */
+	private array $role = [];
 	
 	/** Профиль пользователя */
 	//#[ORM\OneToMany(mappedBy: 'user', targetEntity: UserProfileInterface::class)]
 	//#[ORM\OneToOne(mappedBy: 'user', targetEntity: UserProfileInterface::class)]
 	//private ?UserProfileInterface $profile = null;
-    
-    
-    //private ?array $profile = null;
-    //private UserProfileInterface $profile;
 	
-//    public function __construct(string $id = null) {
-//
-//		$this->id = new UserUid($id);
-//	}
-	
+	//private ?array $profile = null;
 	//private UserProfileInterface $profile;
 	
+	//    public function __construct(string $id = null) {
+	//
+	//		$this->id = new UserUid($id);
+	//	}
 	
+	//private UserProfileInterface $profile;
 	
 	public function __construct(string $id = null)
 	{
 		$this->id = new UserUid($id);
 	}
 	
+	
 	/** Идентификатор */
 	
+	public function getId() : UserUid
+	{
+		return $this->id;
+	}
 	
-    public function getId() : UserUid
-    {
-        return $this->id;
-    }
 	
-    public function getUserIdentifier() : string
-    {
-        return (string) $this->id;
-    }
+	public function getUserIdentifier() : string
+	{
+		return (string) $this->id;
+	}
 	
 	
 	/** Роли пользователя */
 	
+	public function setRole(array $role) : void
+	{
+		$this->role = $role;
+	}
 	
-    public function setRole(array $role) : void
-    {
-        $this->role = $role;
-    }
 	
-    public function getRoles() : array
-    {
-        return count($this->role) ? $this->role : ['ROLE_USER'];
-    }
+	public function getRoles() : array
+	{
+		return count($this->role) ? $this->role : ['ROLE_USER'];
+	}
 	
 	
 	/** Профиль пользователя */
-    public function getProfile() //: ?UserProfileInterface
-    {
+	public function getProfile() //: ?UserProfileInterface
+	{
 		return null;
 		
 		//dump($this->profile->getProfile());
 		
 		//return $this->profile;
 		
-       //return $this->profile;
-    }
+		//return $this->profile;
+	}
 	
-//
-//
-//    public function getProfileUid() : string
-//    {
-//        $profile = $this->profile;
-//        return new $profile['user_profile_id'];
-//    }
-//
-//    public function setProfile(?array $profile = null) : void
-//    {
-//        $this->profile = $profile;
-//    }
-    
-
-    /**
-     * @see UserInterface
-     */
-    public function eraseCredentials()
-    {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
-    }
-
-    public function credentials() : string
-    {
-        return md5(serialize($this->role));
-    }
-    
+	//
+	//
+	//    public function getProfileUid() : string
+	//    {
+	//        $profile = $this->profile;
+	//        return new $profile['user_profile_id'];
+	//    }
+	//
+	//    public function setProfile(?array $profile = null) : void
+	//    {
+	//        $this->profile = $profile;
+	//    }
+	
+	/**
+	 * @see UserInterface
+	 */
+	public function eraseCredentials()
+	{
+		// If you store any temporary, sensitive data on the user, clear it here
+		// $this->plainPassword = null;
+	}
+	
+	
+	public function credentials() : string
+	{
+		return md5(serialize($this->role));
+	}
+	
 }

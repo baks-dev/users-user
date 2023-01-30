@@ -2,55 +2,29 @@
 
 namespace BaksDev\Users\User\Type\Id;
 
+use BaksDev\Core\Type\UidType\Uid;
 use Symfony\Component\Uid\AbstractUid;
-use Symfony\Component\Uid\Uuid;
 
-final class UserUid
+final class UserUid extends Uid
 {
-    public const TYPE = 'user_id';
-    
-    private Uuid $value;
-    
-    private ?string $name;
-    
-    
-    public function __construct(AbstractUid|string|null $value = null, string $name = null)
-    {
-        if($value === null)
-        {
-            $value = Uuid::v7();
-        }
-        
-        else if(is_string($value))
-        {
-            $value = new Uuid($value);
-        }
-        
-        $this->value = $value;
-        $this->name = $name;
-    }
-    
-    public function __toString() : string
-    {
-        return $this->value;
-    }
-    
-    public function getValue() : AbstractUid
-    {
-        return $this->value;
-    }
-    
-    /**
-     * @return string|null
-     */
-    public function getName() : ?string
-    {
-        return $this->name;
-    }
-    
-    public function equals(UserUid $uid) : bool
-    {
-        return (string) $this->value === (string) $uid->getValue();
-    }
-    
+	public const TYPE = 'user_id';
+	
+	private mixed $option;
+	
+	
+	public function __construct(
+		AbstractUid|string|null $value = null,
+		mixed $option = null,
+	)
+	{
+		parent::__construct($value);
+		$this->option = $option;
+	}
+	
+	
+	public function getOption() : mixed
+	{
+		return $this->option;
+	}
+	
 }

@@ -38,11 +38,13 @@ final class UserRepository extends ServiceEntityRepository
 {
 	private GetUserByIdInterface $getUserById;
 	
+	
 	public function __construct(ManagerRegistry $registry, GetUserByIdInterface $getUserById)
 	{
 		parent::__construct($registry, User::class);
 		$this->getUserById = $getUserById;
 	}
+	
 	
 	/** Переопределяем метод Doctrine\ORM find() */
 	public function find($id, $lockMode = null, $lockVersion = null)
@@ -54,11 +56,12 @@ final class UserRepository extends ServiceEntityRepository
 		}
 		
 		/* Если идентификатор тестового администратора */
-		if( (string) $id['id'] === TestUserAccount::TEST_ADMIN_UID)
+		if((string) $id['id'] === TestUserAccount::TEST_ADMIN_UID)
 		{
 			return TestUserAccount::getAdmin();
 		}
 		
 		return $this->getUserById->get($id['id']);
 	}
+	
 }

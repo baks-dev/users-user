@@ -10,6 +10,16 @@
 $ composer require baks-dev/users-user
 ```
 
+## Дополнительно
+
+Изменения в схеме базы данных с помощью миграции
+
+``` bash
+$ php bin/console doctrine:migrations:diff
+
+$ php bin/console doctrine:migrations:migrate
+```
+
 ## Журнал изменений ![Changelog](https://img.shields.io/badge/changelog-yellow)
 
 О том, что изменилось за последнее время, обратитесь к [CHANGELOG](CHANGELOG.md) за дополнительной информацией.

@@ -29,22 +29,24 @@ use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-
 final class UserListenerDecorate implements UserProfileInterface
 {
 	public $user;
 	
 	private TranslatorInterface $translator;
 	
+	
 	public function __construct(UserProfileInterface $profile, TranslatorInterface $translator)
 	{
 		$this->translator = $translator;
 	}
 	
+	
 	public function postLoad(UserInterface $data, LifecycleEventArgs $event) : void
-    {
+	{
 		$this->user = $data->getId();
-    }
+	}
+	
 	
 	/**  Username пользователя */
 	public function getUsername() : ?string
@@ -52,11 +54,13 @@ final class UserListenerDecorate implements UserProfileInterface
 		return null;
 	}
 	
+	
 	/** Контакт */
 	public function getContact() : ?string
 	{
 		return null;
 	}
+	
 	
 	/** Тип пользователя */
 	public function getType() : ?string
@@ -64,11 +68,13 @@ final class UserListenerDecorate implements UserProfileInterface
 		return $this->translator->trans('user.profile.type', domain: 'user.account');
 	}
 	
+	
 	/** Адрес персональной страницы */
 	public function getPage() : ?string
 	{
 		return null;
 	}
+	
 	
 	/** Адрес страницы редактирвоания */
 	public function getEdiPath() : ?string
@@ -76,15 +82,18 @@ final class UserListenerDecorate implements UserProfileInterface
 		return null;
 	}
 	
+	
 	/** Аватарка */
 	public function getImage() : ?string
 	{
 		return null;
 	}
 	
+	
 	/** Идентификатор страницы редактирвоания */
 	public function getEvent() : ?string
 	{
 		return null;
 	}
+	
 }

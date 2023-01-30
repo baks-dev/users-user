@@ -24,25 +24,27 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class GetUserById implements GetUserByIdInterface
 {
-    private EntityManagerInterface $entityManager;
-    
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
-    
+	private EntityManagerInterface $entityManager;
+	
+	
+	public function __construct(EntityManagerInterface $entityManager)
+	{
+		$this->entityManager = $entityManager;
+	}
+	
+	
 	/** Мотод возвращает сущность User  */
-    public function get(UserUid $userUid) : mixed
-    {
+	public function get(UserUid $userUid) : mixed
+	{
 		$qb = $this->entityManager->createQueryBuilder();
 		$qb->select('users');
-	
+		
 		$qb->from(User::class, 'users');
-	
+		
 		$qb->where('users.id = :userUid');
 		$qb->setParameter('userUid', $userUid, UserUid::TYPE);
 		
 		return $qb->getQuery()->getOneOrNullResult();
-    }
-    
+	}
+	
 }

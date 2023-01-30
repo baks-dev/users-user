@@ -28,16 +28,20 @@ interface UserProfileInterface
 	/**  Username пользователя */
 	public function getUsername() : ?string;
 	
+	
 	/** Контакт */
 	public function getContact() : ?string;
+	
 	
 	/** Тип пользователя */
 	public function getType() : ?string;
 	
+	
 	/** Адрес персональной страницы */
 	public function getPage() : ?string;
 	
+	
 	/** Аватарка */
 	public function getImage() : ?string;
-
+	
 }
