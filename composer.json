@@ -19,6 +19,7 @@
       "email": "admin@baks.dev"
     }
   ],
+
   "require": {
     "php": ">=8.1",
     "symfony/uid": "^6.2",
