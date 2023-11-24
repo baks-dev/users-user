@@ -89,7 +89,9 @@ final class GetUserById implements GetUserByIdInterface
 
 
         /** @var User $usr */
-        $usr = $qb->enableCache((string) $userUid, 86400)->getOneOrNullResult();
+        $usr = $qb
+            ->enableCache((string) $userUid, 86400)
+            ->getOneOrNullResult();
 
 
         //$usr = $qb->getOneOrNullResult();
@@ -131,6 +133,8 @@ final class GetUserById implements GetUserByIdInterface
         //dump($authority);
         //        /dump($profile);
 
+        //dd($profile);
+
 
         /** Проверяем, имеется ли у пользователя группа либо доверенность */
         $existGroup = $this->existProfileGroup->isExistsProfileGroup($profile);
@@ -140,7 +144,8 @@ final class GetUserById implements GetUserByIdInterface
             /** Получаем префикс группы профиля
              * $authority = false - если администратор ресурса
              * */
-            $group = $this->profileGroupByUserProfile->findProfileGroupByUserProfile($profile, $authority);
+            $group = $this->profileGroupByUserProfile
+                ->findProfileGroupByUserProfile($profile, $authority);
             
             $roles = null;
 
