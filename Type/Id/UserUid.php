@@ -22,7 +22,7 @@ final class UserUid extends Uid
 	
 	
 	public function __construct(
-		AbstractUid|string|null $value = null,
+		AbstractUid|self|string|null $value = null,
 		mixed $option = null,
 	)
 	{
