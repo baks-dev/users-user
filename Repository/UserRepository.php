@@ -43,23 +43,26 @@ final class UserRepository extends ServiceEntityRepository
     }
 
     /** Переопределяем метод Doctrine\ORM find() */
-    public function find($id, $lockMode = null, $lockVersion = null)
+    public function find($id, $lockMode = null, $lockVersion = null): ?object
     {
 
         $id = $id['id'] ?? $id;
 
         // Если идентификатор тестового пользователя
-        if (TestUserAccount::getUsr()->getUserIdentifier() === (string) $id) {
+        if(TestUserAccount::getUsr()->getUserIdentifier() === (string) $id)
+        {
             return TestUserAccount::getUsr();
         }
 
         // Если идентификатор тестового модератора
-        if (TestUserAccount::getModer()->getUserIdentifier() === (string) $id) {
+        if(TestUserAccount::getModer()->getUserIdentifier() === (string) $id)
+        {
             return TestUserAccount::getModer();
         }
 
         // Если идентификатор тестового администратора
-        if (TestUserAccount::getAdmin()->getUserIdentifier() === (string) $id) {
+        if(TestUserAccount::getAdmin()->getUserIdentifier() === (string) $id)
+        {
             return TestUserAccount::getAdmin();
         }
 
@@ -68,7 +71,7 @@ final class UserRepository extends ServiceEntityRepository
         {
             $id = new UserUid($id);
         }
-        
+
         return $this->getUserById->get($id);
     }
 }
