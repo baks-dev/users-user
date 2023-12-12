@@ -42,7 +42,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 #[AsController]
-#[RoleSecurity('ROLE_USER')]
+#[RoleSecurity('ROLE_ADMIN')]
 final class SwitchUserController extends AbstractController
 {
     #[Route('/admin/switch/user/{id}', name: 'admin.switch', methods: ['GET', 'POST'])]

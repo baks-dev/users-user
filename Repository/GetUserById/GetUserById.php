@@ -93,6 +93,8 @@ final class GetUserById implements GetUserByIdInterface
             ->enableCache((string) $userUid, 86400)
             ->getOneOrNullResult();
 
+        //dump((string) $usr->getProfile());
+
 
         //$usr = $qb->getOneOrNullResult();
 
@@ -101,6 +103,7 @@ final class GetUserById implements GetUserByIdInterface
         //
 
         //dump($usr);
+
 
         /** Получаем группу профиля пользователя */
         if($usr->getProfile() instanceof UserProfileUid)
@@ -112,7 +115,6 @@ final class GetUserById implements GetUserByIdInterface
             {
                 $usr->setProfile($authority);
             }
-
 
             $roles = $this->fetchAllRoleUser($usr->getProfile());
             $usr->setRole($roles);
@@ -136,8 +138,12 @@ final class GetUserById implements GetUserByIdInterface
         //dd($profile);
 
 
+        //dump($profile);
+
         /** Проверяем, имеется ли у пользователя группа либо доверенность */
         $existGroup = $this->existProfileGroup->isExistsProfileGroup($profile);
+
+        //dump((string) $profile);
 
         if($existGroup)
         {
@@ -231,7 +237,6 @@ final class GetUserById implements GetUserByIdInterface
             $roles[] = 'ROLE_ADMINISTRATION';
 
         }
-
 
 
         $roles[] = 'ROLE_USER';

@@ -51,6 +51,11 @@ class User implements UserInterface
         
     }
 
+    public function __toString(): string
+    {
+       return (string) $this->id;
+    }
+
     /** Идентификатор */
     public function getId(): UserUid
     {
