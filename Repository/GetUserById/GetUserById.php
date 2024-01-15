@@ -106,7 +106,7 @@ final class GetUserById implements GetUserByIdInterface
 
 
         /** Получаем группу профиля пользователя */
-        if($usr->getProfile() instanceof UserProfileUid)
+        if($usr && $usr->getProfile() instanceof UserProfileUid)
         {
             $AppCache = $this->cache->init('Authority');
             $authority = ($AppCache->getItem($usr->getUserIdentifier()))->get();
@@ -136,7 +136,6 @@ final class GetUserById implements GetUserByIdInterface
         //        /dump($profile);
 
         //dd($profile);
-
 
         //dump($profile);
 
