@@ -64,8 +64,13 @@ final class GetUserById implements GetUserByIdInterface
 
         $qb = $this->ORMQueryBuilder->createQueryBuilder(self::class);
 
-        $qb->select('users');
-        $qb->from(User::class, 'users');
+        $qb
+            ->select('users')
+            ->from(User::class, 'users')
+            ->where('users.id = :userUid')
+            ->setParameter('userUid', $userUid, UserUid::TYPE)
+            ->setMaxResults(1);
+
 
         if(class_exists(UserProfileInfo::class))
         {
@@ -83,26 +88,16 @@ final class GetUserById implements GetUserByIdInterface
             );
         }
 
-        $qb->where('users.id = :userUid');
-        $qb->setParameter('userUid', $userUid, UserUid::TYPE);
-        $qb->setMaxResults(1);
-
-
         /** @var User $usr */
         $usr = $qb
             ->enableCache((string) $userUid, 86400)
             ->getOneOrNullResult();
 
-        //dump((string) $usr->getProfile());
 
-
-        //$usr = $qb->getOneOrNullResult();
-
-        //        $token = new SwitchUserToken($user, $user->getRoles(), $this->getUser()->getOriginalToken());
-        //        $this->tokenStorage->setToken($token);
-        //
-
-        //dump($usr);
+        if(!class_exists(UserProfileUid::class))
+        {
+            return $usr;
+        }
 
 
         /** Получаем группу профиля пользователя */
@@ -151,7 +146,7 @@ final class GetUserById implements GetUserByIdInterface
              * */
             $group = $this->profileGroupByUserProfile
                 ->findProfileGroupByUserProfile($profile, $authority);
-            
+
             $roles = null;
 
             if($group)
