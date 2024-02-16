@@ -120,24 +120,8 @@ final class GetUserById implements GetUserByIdInterface
 
     public function fetchAllRoleUser(UserProfileUid $profile, UserProfileUid|bool|null $authority = null): ?array
     {
-        //$session = $this->requestStack->getSession();
-        //$authority = $session->get($usr->getProfile(), null);
-
-
-        //dump($profile);
-        //dd($authority);
-
-        //dump($authority);
-        //        /dump($profile);
-
-        //dd($profile);
-
-        //dump($profile);
-
         /** Проверяем, имеется ли у пользователя группа либо доверенность */
         $existGroup = $this->existProfileGroup->isExistsProfileGroup($profile);
-
-        //dump((string) $profile);
 
         if($existGroup)
         {
