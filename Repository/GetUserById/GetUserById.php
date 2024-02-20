@@ -99,7 +99,6 @@ final class GetUserById implements GetUserByIdInterface
             return $usr;
         }
 
-
         /** Получаем группу профиля пользователя */
         if($usr && $usr->getProfile() instanceof UserProfileUid)
         {
