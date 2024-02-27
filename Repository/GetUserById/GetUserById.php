@@ -114,6 +114,8 @@ final class GetUserById implements GetUserByIdInterface
             $usr->setRole($roles);
         }
 
+        //dump($usr);
+
         return $usr;
     }
 
