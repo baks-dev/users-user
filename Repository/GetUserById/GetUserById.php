@@ -185,9 +185,8 @@ final class GetUserById implements GetUserByIdInterface
                             ->setParameter('authority', $authority, UserProfileUid::TYPE);
                     }
 
-
                     $roles = $qb
-                        //->enableCache('UserGroup', 86400)
+                        ->enableCache('users-profile-group', 60)
                         ->fetchOne();
 
                     if($roles)
@@ -216,7 +215,6 @@ final class GetUserById implements GetUserByIdInterface
             $roles[] = 'ROLE_ADMINISTRATION';
 
         }
-
 
         $roles[] = 'ROLE_USER';
 
