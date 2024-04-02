@@ -33,7 +33,7 @@ use BaksDev\Users\User\Entity\User;
 use BaksDev\Users\User\Type\Id\UserUid;
 
 
-final class GetUserById implements GetUserByIdInterface
+final class GetUserByIdRepository implements GetUserByIdInterface
 {
     private ORMQueryBuilder $ORMQueryBuilder;
     private DBALQueryBuilder $DBALQueryBuilder;
