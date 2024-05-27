@@ -25,3 +25,4 @@ $ php bin/console doctrine:migrations:migrate
 
 The MIT License (MIT). Обратитесь к [Файлу лицензии](LICENSE.md) за дополнительной информацией.
 
+
