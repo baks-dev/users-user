@@ -23,6 +23,7 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use BaksDev\Users\User\BaksDevUsersUserBundle;
 use BaksDev\Users\User\Type\Id\UserUid;
 use BaksDev\Users\User\Type\Id\UserUidType;
 use Symfony\Config\DoctrineConfig;
@@ -30,7 +31,7 @@ use Symfony\Config\DoctrineConfig;
 //use BaksDev\Users\User\Entity\UserProfile\UserProfile;
 //use BaksDev\Users\User\Entity\UserProfile\UserProfileInterface;
 
-return static function (DoctrineConfig $doctrine, ContainerConfigurator $configurator): void {
+return static function(DoctrineConfig $doctrine, ContainerConfigurator $configurator): void {
     $services = $configurator->services()
         ->defaults()
         ->autowire()
@@ -38,14 +39,12 @@ return static function (DoctrineConfig $doctrine, ContainerConfigurator $configu
 
     $doctrine->dbal()->type(UserUid::TYPE)->class(UserUidType::class);
     $services->set(UserUid::class)->class(UserUid::class);
-    
-    $emDefault = $doctrine->orm()->entityManager('default')->autoMapping(true);
 
-    $MODULE = substr(__DIR__, 0, strpos(__DIR__, "Resources"));
+    $emDefault = $doctrine->orm()->entityManager('default')->autoMapping(true);
 
     $emDefault->mapping('users-user')
         ->type('attribute')
-        ->dir($MODULE.'Entity')
+        ->dir(BaksDevUsersUserBundle::PATH.'Entity')
         ->isBundle(false)
         ->prefix('BaksDev\Users\User\Entity')
         ->alias('users-user');

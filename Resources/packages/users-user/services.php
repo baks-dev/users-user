@@ -2,6 +2,8 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use BaksDev\Users\User\BaksDevUsersUserBundle;
+
 return static function(ContainerConfigurator $configurator) {
 
     $services = $configurator->services()
@@ -9,15 +11,14 @@ return static function(ContainerConfigurator $configurator) {
         ->autowire()
         ->autoconfigure();
 
-    $NAMESPACE = 'BaksDev\Users\User\\';
+    $NAMESPACE = BaksDevUsersUserBundle::NAMESPACE;
+    $PATH = BaksDevUsersUserBundle::PATH;
 
-    $MODULE = substr(__DIR__, 0, strpos(__DIR__, "Resources"));
-
-    $services->load($NAMESPACE, $MODULE)
+    $services->load($NAMESPACE, $PATH)
         ->exclude([
-            $MODULE.'{Entity,Resources,Type}',
-            $MODULE.'**/*Message.php',
-            $MODULE.'**/*DTO.php',
+            $PATH.'{Entity,Resources,Type}',
+            $PATH.'**/*Message.php',
+            $PATH.'**/*DTO.php',
         ])
     ;
 
