@@ -48,12 +48,12 @@ class User implements UserInterface
     {
         $this->id = new UserUid($id);
         $this->profile = $profile;
-        
+
     }
 
     public function __toString(): string
     {
-       return (string) $this->id;
+        return (string) $this->id;
     }
 
     /** Идентификатор */
@@ -103,7 +103,7 @@ class User implements UserInterface
         $this->profile = $profile;
         return $this;
     }
-    
+
 
 
     //    public function credentials(): string
@@ -120,5 +120,5 @@ class User implements UserInterface
      *
      * @return void
      */
-    public function eraseCredentials() : void {}
+    public function eraseCredentials(): void {}
 }

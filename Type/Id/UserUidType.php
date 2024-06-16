@@ -12,15 +12,15 @@ use Symfony\Component\Uid\Uuid;
 
 final class UserUidType extends UidType
 {
-	public function getClassType(): string
-	{
-		return UserUid::class;
-	}
-	
-	
-	public function getName(): string
-	{
+    public function getClassType(): string
+    {
+        return UserUid::class;
+    }
+
+
+    public function getName(): string
+    {
         return UserUid::TYPE;
-	}
-	
+    }
+
 }

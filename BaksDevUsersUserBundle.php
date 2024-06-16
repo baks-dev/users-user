@@ -12,14 +12,12 @@ declare(strict_types=1);
 
 namespace BaksDev\Users\User;
 
-use DirectoryIterator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
 class BaksDevUsersUserBundle extends AbstractBundle
 {
-
     public const NAMESPACE = __NAMESPACE__.'\\';
 
     public const PATH = __DIR__.DIRECTORY_SEPARATOR;
@@ -33,10 +31,10 @@ class BaksDevUsersUserBundle extends AbstractBundle
 
         $services->load(self::NAMESPACE, self::PATH)
             ->exclude([
-                self::PATH.'{Entity,Resources,Type}',
+                self::PATH.'{Entity,Resources,Type,Tests}',
                 self::PATH.'**/*Message.php',
                 self::PATH.'**/*DTO.php',
             ]);
     }
-	
+
 }

@@ -28,17 +28,21 @@ use BaksDev\Users\User\Type\Id\UserUid;
 use BaksDev\Users\User\Type\Id\UserUidType;
 use Symfony\Config\DoctrineConfig;
 
-//use BaksDev\Users\User\Entity\UserProfile\UserProfile;
-//use BaksDev\Users\User\Entity\UserProfile\UserProfileInterface;
-
 return static function(DoctrineConfig $doctrine, ContainerConfigurator $configurator): void {
+
     $services = $configurator->services()
         ->defaults()
         ->autowire()
         ->autoconfigure();
 
-    $doctrine->dbal()->type(UserUid::TYPE)->class(UserUidType::class);
-    $services->set(UserUid::class)->class(UserUid::class);
+    $doctrine
+        ->dbal()
+        ->type(UserUid::TYPE)
+        ->class(UserUidType::class);
+
+    $services
+        ->set(UserUid::class)
+        ->class(UserUid::class);
 
     $emDefault = $doctrine->orm()->entityManager('default')->autoMapping(true);
 

@@ -16,25 +16,25 @@ final class UserUid extends Uid
 
     public const TEST_MODER = '0187a420-e616-7c12-8ddd-ff0527f3cba1';
 
-	public const TYPE = 'user_id';
-	
-	private mixed $option;
-	
-	
-	public function __construct(
-		AbstractUid|self|string|null $value = null,
-		mixed $option = null,
-	)
-	{
+    public const TYPE = 'user_id';
+
+    private mixed $option;
+
+
+    public function __construct(
+        AbstractUid|self|string|null $value = null,
+        mixed $option = null,
+    )
+    {
         parent::__construct($value);
 
-		$this->option = $option;
-	}
-	
-	
-	public function getOption(): mixed
-	{
-		return $this->option;
-	}
-	
+        $this->option = $option;
+    }
+
+
+    public function getOption(): mixed
+    {
+        return $this->option;
+    }
+
 }
