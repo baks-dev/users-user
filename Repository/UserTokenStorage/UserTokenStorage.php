@@ -55,8 +55,6 @@ final class UserTokenStorage implements UserTokenStorageInterface
 
         if(is_null($this->user))
         {
-            dump('Получили пользователя');
-
             $this->user = new UserUid($this->UserInterface->getUserIdentifier());
         }
 

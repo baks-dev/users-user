@@ -1,6 +1,6 @@
 # BaksDev User
 
-[![Version](https://img.shields.io/badge/version-7.1.8-blue)](https://github.com/baks-dev/users-user/releases)
+[![Version](https://img.shields.io/badge/version-7.1.9-blue)](https://github.com/baks-dev/users-user/releases)
 ![php 8.3+](https://img.shields.io/badge/php-min%208.3-red.svg)
 
 Модуль сущности User
