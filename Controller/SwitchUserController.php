@@ -25,7 +25,6 @@ declare(strict_types=1);
 
 namespace BaksDev\Users\User\Controller;
 
-
 use BaksDev\Core\Cache\AppCacheInterface;
 use BaksDev\Core\Controller\AbstractController;
 use BaksDev\Core\Listeners\Event\Security\RoleSecurity;
@@ -52,8 +51,7 @@ final class SwitchUserController extends AbstractController
         TokenStorageInterface $tokenStorage,
         GetUserByIdInterface $getUserById,
         AppCacheInterface $cache
-    ): Response
-    {
+    ): Response {
         if(!$request->getSession()->get('_switch_user'))
         {
             /** Удаляем авторизацию пользователя */

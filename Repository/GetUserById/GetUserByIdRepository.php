@@ -32,29 +32,15 @@ use BaksDev\Users\Profile\UserProfile\Type\Id\UserProfileUid;
 use BaksDev\Users\User\Entity\User;
 use BaksDev\Users\User\Type\Id\UserUid;
 
-
-final class GetUserByIdRepository implements GetUserByIdInterface
+final readonly class GetUserByIdRepository implements GetUserByIdInterface
 {
-    private ORMQueryBuilder $ORMQueryBuilder;
-    private DBALQueryBuilder $DBALQueryBuilder;
-    private ProfileGroupByUserProfileInterface $profileGroupByUserProfile;
-    private ExistProfileGroupInterface $existProfileGroup;
-    private AppCacheInterface $cache;
-
     public function __construct(
-        DBALQueryBuilder $DBALQueryBuilder,
-        ORMQueryBuilder $ORMQueryBuilder,
-        ProfileGroupByUserProfileInterface $profileGroupByUserProfile,
-        ExistProfileGroupInterface $existProfileGroup,
-        AppCacheInterface $cache
-    )
-    {
-        $this->ORMQueryBuilder = $ORMQueryBuilder;
-        $this->DBALQueryBuilder = $DBALQueryBuilder;
-        $this->profileGroupByUserProfile = $profileGroupByUserProfile;
-        $this->existProfileGroup = $existProfileGroup;
-        $this->cache = $cache;
-    }
+        private DBALQueryBuilder $DBALQueryBuilder,
+        private ORMQueryBuilder $ORMQueryBuilder,
+        private ProfileGroupByUserProfileInterface $profileGroupByUserProfile,
+        private ExistProfileGroupInterface $existProfileGroup,
+        private AppCacheInterface $cache
+    ) {}
 
     /**
      * Метод возвращает сущность User
@@ -74,7 +60,8 @@ final class GetUserByIdRepository implements GetUserByIdInterface
 
         if(class_exists(UserProfileInfo::class))
         {
-            $select = sprintf('new %s(users.id, info.profile)',
+            $select = sprintf(
+                'new %s(users.id, info.profile)',
                 User::class
             );
 
@@ -128,7 +115,7 @@ final class GetUserByIdRepository implements GetUserByIdInterface
         {
             /** Получаем префикс группы профиля
              * $authority = false - если администратор ресурса
-             * */
+             */
             $group = $this->profileGroupByUserProfile
                 ->findProfileGroupByUserProfile($profile, $authority);
 
