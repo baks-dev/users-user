@@ -70,8 +70,6 @@ final class UserTokenStorage implements UserTokenStorageInterface
 
         if(is_null($this->current))
         {
-            dump('Получили Current пользователя');
-
             $this->current = new UserUid($this->CurrentUserInterface->getUserIdentifier());
         }
 
