@@ -58,6 +58,11 @@ final class UserTokenStorage implements UserTokenStorageInterface
             $this->user = new UserUid($this->UserInterface->getUserIdentifier());
         }
 
+        if($this->user === false)
+        {
+            throw new UserAccessDeniedException('Для доступа к ресурсу необходима полная аутентификация');
+        }
+
         return $this->user;
     }
 
@@ -71,6 +76,11 @@ final class UserTokenStorage implements UserTokenStorageInterface
         if(is_null($this->current))
         {
             $this->current = new UserUid($this->CurrentUserInterface->getUserIdentifier());
+        }
+
+        if($this->current === false)
+        {
+            throw new UserAccessDeniedException('Для доступа к ресурсу необходима полная аутентификация');
         }
 
         return $this->current;
