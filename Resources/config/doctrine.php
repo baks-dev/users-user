@@ -28,7 +28,7 @@ use BaksDev\Users\User\Type\Id\UserUid;
 use BaksDev\Users\User\Type\Id\UserUidType;
 use Symfony\Config\DoctrineConfig;
 
-return static function(DoctrineConfig $doctrine, ContainerConfigurator $configurator): void {
+return static function (DoctrineConfig $doctrine, ContainerConfigurator $configurator): void {
 
     $services = $configurator->services()
         ->defaults()
@@ -50,6 +50,6 @@ return static function(DoctrineConfig $doctrine, ContainerConfigurator $configur
         ->type('attribute')
         ->dir(BaksDevUsersUserBundle::PATH.'Entity')
         ->isBundle(false)
-        ->prefix('BaksDev\Users\User\Entity')
+        ->prefix(BaksDevUsersUserBundle::NAMESPACE.'\\Entity')
         ->alias('users-user');
 };

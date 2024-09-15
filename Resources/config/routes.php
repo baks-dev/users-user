@@ -21,17 +21,18 @@
  *  THE SOFTWARE.
  */
 
+use BaksDev\Users\User\BaksDevUsersUserBundle;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-return function(RoutingConfigurator $routes) {
+return function (RoutingConfigurator $routes) {
 
-    $MODULE = substr(__DIR__, 0, strpos(__DIR__, "Resources"));
+    $MODULE = BaksDevUsersUserBundle::PATH;
 
     $routes->import(
         $MODULE.'Controller',
         'attribute',
         false,
-        $MODULE.'Controller/**/*Test.php'
+        $MODULE.implode(DIRECTORY_SEPARATOR, ['Controller', '**', '*Test.php'])
     )
         ->prefix(\BaksDev\Core\Type\Locale\Locale::routes())
         ->namePrefix('users-user:');
