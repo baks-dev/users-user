@@ -23,7 +23,6 @@
 
 namespace BaksDev\Users\User\Type\Id;
 
-use App\Kernel;
 use BaksDev\Core\Type\UidType\Uid;
 use Symfony\Component\Uid\AbstractUid;
 
@@ -31,11 +30,11 @@ final class UserUid extends Uid
 {
     public const string TEST = '018ae5c6-eb00-7a96-9ebf-d1be4bb044c4';
 
-    public const string TEST _USER = '018549ea-0ff7-7439-872e-dbda9993e413';
+    public const string TEST_USER = '018549ea-0ff7-7439-872e-dbda9993e413';
 
-    public const string TEST _ADMIN = '018549ee-24ba-7177-9622-d6d8f7b721ee';
+    public const string TEST_ADMIN = '018549ee-24ba-7177-9622-d6d8f7b721ee';
 
-    public const string TEST _MODER = '0187a420-e616-7c12-8ddd-ff0527f3cba1';
+    public const string TEST_MODER = '0187a420-e616-7c12-8ddd-ff0527f3cba1';
 
     public const string TYPE = 'user_id';
 
@@ -52,10 +51,8 @@ final class UserUid extends Uid
         $this->option = $option;
     }
 
-
     public function getOption(): mixed
     {
         return $this->option;
     }
-
 }
