@@ -30,11 +30,11 @@ use Symfony\Component\Dotenv\Dotenv;
 
 final class TestUserAccount
 {
-    //    public const TEST_USER_UID = '018549ea-0ff7-7439-872e-dbda9993e413';
+    //    public const string TEST _USER_UID = '018549ea-0ff7-7439-872e-dbda9993e413';
     //
-    //    public const TEST_ADMIN_UID = '018549ee-24ba-7177-9622-d6d8f7b721ee';
+    //    public const string TEST _ADMIN_UID = '018549ee-24ba-7177-9622-d6d8f7b721ee';
     //
-    //    public const TEST_MODER_UID = '0187a420-e616-7c12-8ddd-ff0527f3cba1';
+    //    public const string TEST _MODER_UID = '0187a420-e616-7c12-8ddd-ff0527f3cba1';
 
     public static ?string $ROLE = null;
 
