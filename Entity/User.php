@@ -42,7 +42,7 @@ class User implements UserInterface
 
     private mixed $profile = null;
 
-    public function __construct(string $id = null, mixed $profile = null)
+    public function __construct(string|null $id = null, mixed $profile = null)
     {
         $this->id = new UserUid($id);
         $this->profile = $profile;
