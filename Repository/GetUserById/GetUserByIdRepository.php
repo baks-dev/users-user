@@ -1,6 +1,6 @@
 <?php
 /*
- *  Copyright 2024.  Baks.dev <admin@baks.dev>
+ *  Copyright 2025.  Baks.dev <admin@baks.dev>
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -50,7 +50,7 @@ final readonly class GetUserByIdRepository implements GetUserByIdInterface
     /**
      * Метод возвращает сущность User
      */
-    public function get(UserUid $userUid): mixed
+    public function get(UserUid $userUid): User|false
     {
 
         $qb = $this->ORMQueryBuilder->createQueryBuilder(self::class);
@@ -85,28 +85,28 @@ final readonly class GetUserByIdRepository implements GetUserByIdInterface
             ->enableCache((string) $userUid, 86400)
             ->getOneOrNullResult();
 
+        if(false === ($usr instanceof User))
+        {
+            return false;
+        }
 
-        if(!class_exists(UserProfileUid::class))
+        if(!class_exists(UserProfileUid::class) || false === ($usr->getProfile() instanceof UserProfileUid))
         {
             return $usr;
         }
 
         /** Получаем группу профиля пользователя */
-        if($usr && $usr->getProfile() instanceof UserProfileUid)
+
+        $AppCache = $this->cache->init('Authority');
+        $authority = ($AppCache->getItem($usr->getUserIdentifier()))->get();
+
+        if($authority)
         {
-            $AppCache = $this->cache->init('Authority');
-            $authority = ($AppCache->getItem($usr->getUserIdentifier()))->get();
-
-            if($authority)
-            {
-                $usr->setProfile($authority);
-            }
-
-            $roles = $this->fetchAllRoleUser($usr->getProfile());
-            $usr->setRole($roles);
+            $usr->setProfile($authority);
         }
 
-        //dump($usr);
+        $roles = $this->fetchAllRoleUser($usr->getProfile());
+        $usr->setRole($roles);
 
         return $usr;
     }
@@ -116,100 +116,100 @@ final readonly class GetUserByIdRepository implements GetUserByIdInterface
         /** Проверяем, имеется ли у пользователя группа либо доверенность */
         $existGroup = $this->existProfileGroup->isExistsProfileGroup($profile);
 
-        if($existGroup)
+        /** Если пользователь не состоит в группе */
+        if(false === $existGroup)
         {
-            /** Получаем префикс группы профиля
-             * $authority = false - если администратор ресурса
-             */
-            $group = $this->profileGroupByUserProfile
-                ->findProfileGroupByUserProfile($profile, $authority);
+            return ['ROLE_USER'];
+        }
 
-            $roles = null;
+        /** Получаем префикс группы профиля
+         * $authority = false - если администратор ресурса
+         */
+        $group = $this->profileGroupByUserProfile
+            ->findProfileGroupByUserProfile($profile, $authority);
 
-            if($group)
-            {
-                if($group->equals('ROLE_ADMIN'))
-                {
-                    $roles = null;
-                    $roles[] = 'ROLE_ADMINISTRATION';
-                    $roles[] = 'ROLE_ADMIN';
-                    $roles[] = 'ROLE_USER';
-                }
-                else
-                {
+        if(false === ($group instanceof GroupPrefix))
+        {
+            return ['ROLE_USER', 'ROLE_ADMINISTRATION'];
+        }
 
-                    /** Получаем список ролей и правил группы */
-                    $qb = $this->DBALQueryBuilder->createQueryBuilder(self::class);
+        if($group->equals('ROLE_ADMIN'))
+        {
+            return ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_ADMINISTRATION'];
+        }
 
-                    $qb->select("
+
+        /** Получаем список ролей и правил группы */
+        $dbal = $this->DBALQueryBuilder->createQueryBuilder(self::class);
+
+        $dbal->select("
                        ARRAY(SELECT DISTINCT UNNEST(
                             ARRAY_AGG(profile_role.prefix) || 
                             ARRAY_AGG(profile_voter.prefix)
                         )) AS roles
                     ");
 
-                    $qb->from(ProfileGroup::class, 'profile_group');
+        $dbal->from(ProfileGroup::class, 'profile_group');
 
-                    $qb->leftJoin(
-                        'profile_group',
-                        ProfileRole::class,
-                        'profile_role',
-                        'profile_role.event = profile_group.event'
-                    );
+        $dbal->leftJoin(
+            'profile_group',
+            ProfileRole::class,
+            'profile_role',
+            'profile_role.event = profile_group.event'
+        );
 
-                    $qb->leftJoin(
-                        'profile_role',
-                        ProfileVoter::class,
-                        'profile_voter',
-                        'profile_voter.role = profile_role.id'
-                    );
+        $dbal->leftJoin(
+            'profile_role',
+            ProfileVoter::class,
+            'profile_voter',
+            'profile_voter.role = profile_role.id'
+        );
 
-                    $qb->andWhere('profile_group.prefix = :prefix')
-                        ->setParameter('prefix', $group, GroupPrefix::TYPE);
+        $dbal
+            ->andWhere('profile_group.prefix = :prefix')
+            ->setParameter(
+                key: 'prefix',
+                value: $group,
+                type: GroupPrefix::TYPE
+            );
 
-                    $qb->andWhere('profile_role.prefix IS NOT NULL');
-                    $qb->andWhere('profile_voter.prefix IS NOT NULL');
+        $dbal
+            ->andWhere('profile_role.prefix IS NOT NULL')
+            ->andWhere('profile_voter.prefix IS NOT NULL');
 
 
-                    if($authority)
-                    {
-                        $qb->andWhere('profile_group.profile = :authority')
-                            ->setParameter('authority', $authority, UserProfileUid::TYPE);
-                    }
-
-                    $roles = $qb
-                        ->enableCache('users-profile-group', 60)
-                        ->fetchOne();
-
-                    if($roles)
-                    {
-                        $roles = trim($roles, "{}");
-
-                        if(empty($roles))
-                        {
-                            return null;
-                        }
-
-                        $roles = explode(",", $roles);
-
-                        if($roles)
-                        {
-                            $roles[] = 'ROLE_ADMINISTRATION';
-                        }
-
-                        $roles[] = 'ROLE_USER';
-                    }
-                }
-
-                return array_filter($roles);
-            }
-
-            $roles[] = 'ROLE_ADMINISTRATION';
-
+        if($authority)
+        {
+            $dbal->andWhere('profile_group.profile = :authority')
+                ->setParameter(
+                    key: 'authority',
+                    value: $authority,
+                    type: UserProfileUid::TYPE
+                );
         }
 
-        $roles[] = 'ROLE_USER';
+        $roles = $dbal
+            ->enableCache('users-profile-group', 60)
+            ->fetchOne();
 
+        if($roles)
+        {
+            $roles = trim($roles, "{}");
+
+            if(empty($roles))
+            {
+                return null;
+            }
+
+            $roles = explode(",", $roles);
+
+            if($roles)
+            {
+                $roles[] = 'ROLE_ADMINISTRATION';
+            }
+
+            $roles[] = 'ROLE_USER';
+        }
 
         return $roles;
     }
