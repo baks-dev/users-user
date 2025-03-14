@@ -106,7 +106,8 @@ final readonly class GetUserByIdRepository implements GetUserByIdInterface
         }
 
         $roles = $this->fetchAllRoleUser($usr->getProfile());
-        $usr->setRole($roles);
+
+        !$roles ?: $usr->setRole($roles);
 
         return $usr;
     }
