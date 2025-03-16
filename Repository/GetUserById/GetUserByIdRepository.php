@@ -36,6 +36,7 @@ use BaksDev\Users\Profile\UserProfile\Entity\Info\UserProfileInfo;
 use BaksDev\Users\Profile\UserProfile\Type\Id\UserProfileUid;
 use BaksDev\Users\User\Entity\User;
 use BaksDev\Users\User\Type\Id\UserUid;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 final readonly class GetUserByIdRepository implements GetUserByIdInterface
 {
@@ -44,7 +45,8 @@ final readonly class GetUserByIdRepository implements GetUserByIdInterface
         private ORMQueryBuilder $ORMQueryBuilder,
         private ProfileGroupByUserProfileInterface $profileGroupByUserProfile,
         private ExistProfileGroupInterface $existProfileGroup,
-        private AppCacheInterface $cache
+        private AppCacheInterface $cache,
+        private RequestStack $request,
     ) {}
 
     /**
@@ -97,8 +99,11 @@ final readonly class GetUserByIdRepository implements GetUserByIdInterface
 
         /** Получаем группу профиля пользователя */
 
-        $AppCache = $this->cache->init('Authority');
-        $authority = ($AppCache->getItem($usr->getUserIdentifier()))->get();
+        $Session = $this->request->getSession();
+        $authority = $Session->get('Authority', false);
+
+        //$AppCache = $this->cache->init('Authority');
+        //$authority = ($AppCache->getItem($usr->getUserIdentifier()))->get();
 
         if($authority)
         {

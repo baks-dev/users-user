@@ -1,6 +1,6 @@
 <?php
 /*
- *  Copyright 2024.  Baks.dev <admin@baks.dev>
+ *  Copyright 2025.  Baks.dev <admin@baks.dev>
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -53,12 +53,16 @@ final class SwitchUserController extends AbstractController
         AppCacheInterface $cache
     ): Response
     {
-        if(!$request->getSession()->get('_switch_user'))
+        $Session = $request->getSession();
+
+        if(!$Session->get('_switch_user'))
         {
             /** Удаляем авторизацию пользователя */
-            $authority = $User->getUserIdentifier();
-            $AppCache = $cache->init('Authority');
-            $AppCache->delete($authority);
+            $Session->remove('Authority');
+
+            //            $authority = $User->getUserIdentifier();
+            //            $AppCache = $cache->init('Authority');
+            //            $AppCache->delete($authority);
 
 
             $CurrentUser = $getUserById->get($User->getId());
