@@ -61,7 +61,11 @@ final readonly class GetUserByIdRepository implements GetUserByIdInterface
             ->select('users')
             ->from(User::class, 'users')
             ->where('users.id = :userUid')
-            ->setParameter('userUid', $userUid, UserUid::TYPE)
+            ->setParameter(
+                key: 'userUid',
+                value: $userUid,
+                type: UserUid::TYPE
+            )
             ->setMaxResults(1);
 
 
@@ -84,7 +88,7 @@ final readonly class GetUserByIdRepository implements GetUserByIdInterface
 
         /** @var User $usr */
         $usr = $qb
-            ->enableCache((string) $userUid, 86400)
+            ->enableCache((string) $userUid, '1 hour')
             ->getOneOrNullResult();
 
         if(false === ($usr instanceof User))
@@ -195,7 +199,7 @@ final readonly class GetUserByIdRepository implements GetUserByIdInterface
         }
 
         $roles = $dbal
-            ->enableCache('users-profile-group', 60)
+            ->enableCache('users-profile-group', '5 minutes')
             ->fetchOne();
 
         if($roles)
