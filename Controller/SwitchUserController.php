@@ -82,7 +82,7 @@ final class SwitchUserController extends AbstractController
 
             $tokenStorage->setToken($impersonationToken);
 
-            return $this->redirectToRoute('core:user.homepage');
+            return $this->redirectToRoute('core:public.homepage');
 
         }
 
