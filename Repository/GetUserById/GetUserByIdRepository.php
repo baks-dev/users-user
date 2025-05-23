@@ -121,7 +121,10 @@ final readonly class GetUserByIdRepository implements GetUserByIdInterface
         return $usr;
     }
 
-    public function fetchAllRoleUser(UserProfileUid $profile, UserProfileUid|bool|null $authority = null): ?array
+    public function fetchAllRoleUser(
+        UserProfileUid $profile,
+        UserProfileUid|bool|null $authority = null
+    ): array|null|false
     {
         /** Проверяем, имеется ли у пользователя группа либо доверенность */
         $existGroup = $this->existProfileGroup->isExistsProfileGroup($profile);
