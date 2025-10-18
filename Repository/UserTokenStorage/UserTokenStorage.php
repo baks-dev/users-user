@@ -26,10 +26,12 @@ declare(strict_types=1);
 namespace BaksDev\Users\User\Repository\UserTokenStorage;
 
 use BaksDev\Core\Doctrine\ORMQueryBuilder;
+use BaksDev\Users\User\Entity\User;
 use BaksDev\Users\User\Type\Id\UserUid;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\SwitchUserToken;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 final class UserTokenStorage implements UserTokenStorageInterface
@@ -45,6 +47,12 @@ final class UserTokenStorage implements UserTokenStorageInterface
     private UserUid|false|null $current = null;
 
     public function __construct(private readonly TokenStorageInterface $tokenStorage) {}
+
+    public function authorization(UserUid $user): void
+    {
+        $token = new UsernamePasswordToken(new User($user), 'user', ['ROLE_ADMIN']);
+        $this->tokenStorage->setToken($token);
+    }
 
     /**
      * Метод проверяет, является ли пользователь авторизованным

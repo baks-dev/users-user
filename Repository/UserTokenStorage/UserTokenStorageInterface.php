@@ -29,6 +29,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
 interface UserTokenStorageInterface
 {
     /**
+     * Метод позволяет авторизовать пользователя по идентификатору
+     * например в консольной комманде либо очереди
+     */
+    public function authorization(UserUid $user);
+
+    /**
      * Метод проверяет, является ли пользователь авторизованным
      */
     public function isUser(): bool;
