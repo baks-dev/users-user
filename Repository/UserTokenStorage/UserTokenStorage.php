@@ -48,9 +48,10 @@ final class UserTokenStorage implements UserTokenStorageInterface
 
     public function __construct(private readonly TokenStorageInterface $tokenStorage) {}
 
-    public function authorization(UserUid $user): void
+    public function authorization(User|UserUid $user): void
     {
-        $token = new UsernamePasswordToken(new User($user), 'user', ['ROLE_ADMIN']);
+        $UserUid = (string) $user;
+        $token = new UsernamePasswordToken(new User($UserUid), 'user', ['ROLE_USER']);
         $this->tokenStorage->setToken($token);
     }
 
