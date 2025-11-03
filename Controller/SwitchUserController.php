@@ -27,6 +27,7 @@ namespace BaksDev\Users\User\Controller;
 
 use BaksDev\Core\Cache\AppCacheInterface;
 use BaksDev\Core\Controller\AbstractController;
+use BaksDev\Core\Form\Search\SearchForm;
 use BaksDev\Core\Listeners\Event\Security\RoleSecurity;
 use BaksDev\Users\User\Entity\User;
 use BaksDev\Users\User\Repository\GetUserById\GetUserByIdInterface;
@@ -54,6 +55,9 @@ final class SwitchUserController extends AbstractController
     ): Response
     {
         $Session = $request->getSession();
+
+        /** Сбрасываем поиск при олицетворении */
+        $Session->remove(md5(SearchForm::class));
 
         if(!$Session->get('_switch_user'))
         {
