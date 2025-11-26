@@ -68,7 +68,6 @@ final readonly class GetUserByIdRepository implements GetUserByIdInterface
             )
             ->setMaxResults(1);
 
-
         if(class_exists(UserProfileInfo::class))
         {
             $select = sprintf(
