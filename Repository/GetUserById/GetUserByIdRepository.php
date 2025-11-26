@@ -64,7 +64,7 @@ final readonly class GetUserByIdRepository implements GetUserByIdInterface
             ->setParameter(
                 key: 'userUid',
                 value: $userUid,
-                type: UserUid::TYPE
+                type: UserUid::TYPE,
             )
             ->setMaxResults(1);
 
@@ -72,7 +72,7 @@ final readonly class GetUserByIdRepository implements GetUserByIdInterface
         {
             $select = sprintf(
                 'new %s(users.id, info.profile)',
-                User::class
+                User::class,
             );
 
             $qb->select($select);
@@ -81,7 +81,7 @@ final readonly class GetUserByIdRepository implements GetUserByIdInterface
                 UserProfileInfo::class,
                 'info',
                 'WITH',
-                'info.usr = users.id AND info.active = true'
+                'info.usr = users.id AND info.active = true',
             );
         }
 
@@ -115,7 +115,7 @@ final readonly class GetUserByIdRepository implements GetUserByIdInterface
 
         $roles = $this->fetchAllRoleUser($usr->getProfile());
 
-        !$roles ?: $usr->setRole($roles);
+        empty($roles) ?: $usr->setRole($roles);
 
         return $usr;
     }
@@ -167,14 +167,14 @@ final readonly class GetUserByIdRepository implements GetUserByIdInterface
             'profile_group',
             ProfileRole::class,
             'profile_role',
-            'profile_role.event = profile_group.event'
+            'profile_role.event = profile_group.event',
         );
 
         $dbal->leftJoin(
             'profile_role',
             ProfileVoter::class,
             'profile_voter',
-            'profile_voter.role = profile_role.id'
+            'profile_voter.role = profile_role.id',
         );
 
         $dbal
@@ -182,7 +182,7 @@ final readonly class GetUserByIdRepository implements GetUserByIdInterface
             ->setParameter(
                 key: 'prefix',
                 value: $group,
-                type: GroupPrefix::TYPE
+                type: GroupPrefix::TYPE,
             );
 
         $dbal
@@ -196,7 +196,7 @@ final readonly class GetUserByIdRepository implements GetUserByIdInterface
                 ->setParameter(
                     key: 'authority',
                     value: $authority,
-                    type: UserProfileUid::TYPE
+                    type: UserProfileUid::TYPE,
                 );
         }
 
