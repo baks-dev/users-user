@@ -33,8 +33,7 @@ return static function(DoctrineConfig $doctrine, ContainerConfigurator $configur
     $services = $configurator->services()
         ->defaults()
         ->autowire()
-        ->autoconfigure()
-        ->public();
+        ->autoconfigure(); //->public();
 
     $doctrine
         ->dbal()
