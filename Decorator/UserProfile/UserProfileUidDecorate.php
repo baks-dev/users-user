@@ -34,15 +34,15 @@ final class UserProfileUidDecorate implements UserProfileInterface
 {
     public const KEY = 'id';
 
-    /** Возвращает значение (value) */
-    public function getValue(UserUid $usr): mixed
-    {
-        return null;
-    }
-
     /** Чем выше число - тем первым будет в итерации */
     public static function priority(): int
     {
         return 999;
+    }
+
+    /** Возвращает значение (value) */
+    public function getValue(UserUid $usr): mixed
+    {
+        return null;
     }
 }

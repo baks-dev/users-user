@@ -42,14 +42,14 @@ final class UserProfileTypeDecorate implements UserProfileInterface
         $this->translator = $translator;
     }
 
+    public static function priority(): int
+    {
+        return 999;
+    }
+
     /** Возвращает значение (value) */
     public function getValue(UserUid $usr): string
     {
         return $this->translator->trans('profile.type', domain: 'user.account');
-    }
-
-    public static function priority(): int
-    {
-        return 999;
     }
 }

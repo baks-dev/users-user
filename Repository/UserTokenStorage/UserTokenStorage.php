@@ -64,6 +64,37 @@ final class UserTokenStorage implements UserTokenStorageInterface
     }
 
     /**
+     * UserInterface
+     */
+    public function getUserInterface(): UserInterface|false
+    {
+        if(is_null($this->token))
+        {
+            $token = $this->tokenStorage->getToken();
+            $this->token = $token instanceof TokenInterface ? $token : false;
+        }
+
+        if($this->token === false)
+        {
+            $this->UserInterface = false;
+            $this->user = false;
+        }
+
+        if(is_null($this->UserInterface))
+        {
+            $user = $this->token->getUser();
+            $this->UserInterface = $user instanceof UserInterface ? $user : false;
+
+            if($this->UserInterface === false)
+            {
+                $this->user = false;
+            }
+        }
+
+        return $this->UserInterface;
+    }
+
+    /**
      * Метод возвращает идентификатор текущего пользователя либо идентификатор олицетворенного
      */
     public function getUser(): UserUid|false
@@ -101,38 +132,6 @@ final class UserTokenStorage implements UserTokenStorageInterface
         }
 
         return $this->current;
-    }
-
-
-    /**
-     * UserInterface
-     */
-    public function getUserInterface(): UserInterface|false
-    {
-        if(is_null($this->token))
-        {
-            $token = $this->tokenStorage->getToken();
-            $this->token = $token instanceof TokenInterface ? $token : false;
-        }
-
-        if($this->token === false)
-        {
-            $this->UserInterface = false;
-            $this->user = false;
-        }
-
-        if(is_null($this->UserInterface))
-        {
-            $user = $this->token->getUser();
-            $this->UserInterface = $user instanceof UserInterface ? $user : false;
-
-            if($this->UserInterface === false)
-            {
-                $this->user = false;
-            }
-        }
-
-        return $this->UserInterface;
     }
 
     /**

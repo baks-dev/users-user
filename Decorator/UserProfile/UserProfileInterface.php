@@ -29,9 +29,9 @@ use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 #[AutoconfigureTag('baks.user.profile')]
 interface UserProfileInterface
 {
-    /** Возвращает значение (value) */
-    public function getValue(UserUid $usr): mixed;
-
     /** Чам выше приоритет - тем первым в итерации будет значение */
     public static function priority(): int;
+
+    /** Возвращает значение (value) */
+    public function getValue(UserUid $usr): mixed;
 }

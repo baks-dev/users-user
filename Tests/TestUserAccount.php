@@ -33,14 +33,13 @@ final class TestUserAccount
     public static ?string $ROLE = null;
 
     public static ?UserProfile $PROFILE = null;
+    private static $envLoaded = false;
+    private static $envValues = [];
 
     public static function getDevice(): array
     {
         return ['Ubuntu', 'iPhone', 'iPad'];
     }
-
-    private static $envLoaded = false;
-    private static $envValues = [];
 
     public static function getUsr(): User
     {
@@ -48,6 +47,19 @@ final class TestUserAccount
         $usr->setRole(self::$ROLE ? [self::$ROLE, 'ROLE_USER'] : ['ROLE_USER']);
 
         return $usr;
+    }
+
+    private static function get(string $key)
+    {
+        if(!self::$envLoaded)
+        {
+            $dotenv = new Dotenv();
+            $dotenv->load(__DIR__.'/../../../../.env.test');
+            self::$envValues = $_ENV;
+            self::$envLoaded = true;
+        }
+
+        return self::$envValues[$key];
     }
 
     public static function getModer(?string $role = null): User
@@ -74,18 +86,5 @@ final class TestUserAccount
         $usr->setRole(['ROLE_USER', 'ROLE_ADMIN']);
 
         return $usr;
-    }
-
-    private static function get(string $key)
-    {
-        if(!self::$envLoaded)
-        {
-            $dotenv = new Dotenv();
-            $dotenv->load(__DIR__.'/../../../../.env.test');
-            self::$envValues = $_ENV;
-            self::$envLoaded = true;
-        }
-
-        return self::$envValues[$key];
     }
 }

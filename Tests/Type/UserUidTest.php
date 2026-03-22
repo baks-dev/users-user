@@ -35,15 +35,15 @@ final class UserUidTest extends KernelTestCase
 {
     private const string TEST_UUID = '0185494d-2ac6-7bbc-9bea-48af2709ac4d';
 
-    public function newUid(mixed $uid = null, ?string $name = null): UserUid
-    {
-        return new UserUid($uid, $name);
-    }
-
     public function testStringUid(): void
     {
         $UUID = $this->newUid(self::TEST_UUID);
         self::assertEquals(self::TEST_UUID, $UUID->getValue());
+    }
+
+    public function newUid(mixed $uid = null, ?string $name = null): UserUid
+    {
+        return new UserUid($uid, $name);
     }
 
     public function testBadStringUid(): void
