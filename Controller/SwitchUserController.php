@@ -59,15 +59,10 @@ final class SwitchUserController extends AbstractController
         /** Сбрасываем поиск при олицетворении */
         $Session->remove(md5(SearchForm::class));
 
-        if(!$Session->get('_switch_user'))
+        if(true === empty($Session->get('_switch_user')))
         {
             /** Удаляем авторизацию пользователя */
             $Session->remove('Authority');
-
-            //            $authority = $User->getUserIdentifier();
-            //            $AppCache = $cache->init('Authority');
-            //            $AppCache->delete($authority);
-
 
             $CurrentUser = $getUserById->get($User->getId());
 
@@ -76,7 +71,7 @@ final class SwitchUserController extends AbstractController
                 throw new InvalidArgumentException('Access Denied');
             }
 
-            $request->getSession()->set('_switch_user', (string) $this->getUsr()?->getId());
+            $request->getSession()->set('_switch_user', $this->getUsr()->getUserIdentifier());
 
             $impersonationToken = new  UsernamePasswordToken(
                 $CurrentUser,
@@ -92,7 +87,7 @@ final class SwitchUserController extends AbstractController
 
         $SwitchUser = $request->getSession()->get('_switch_user');
 
-        if(!$SwitchUser)
+        if(true === empty($SwitchUser))
         {
             return new Response('OK');
         }
